@@ -1616,20 +1616,20 @@
        * POST enqueue Filavirtual: muchas filas breves (estilo referencia que encolaba bien).
        */
       function construirPayloadEnqueueTurno() {
-        var ph = soloDigitosTelefono(formTelefono);
-        if (!ph) ph = '0000000000';
-        var op = opcionTramiteJourney || 'prestamos';
-        var nom = String(formNombre || '').trim();
-        var ape = String(formApellido || '').trim();
-        var curp = String(formDni || '').trim();
-        var mail = textoPlanoExtra(formEmail, 120);
+        var firstName     = String(formNombre   || '').trim();
+        var lastName      = String(formApellido || '').trim();
+        var cedulaIdentidad = String(formDni    || '').trim();
+        var email         = String(formEmail    || '').trim();
+        var phone         = soloDigitosTelefono(formTelefono) || '0000000000';
+        var op            = opcionTramiteJourney || 'prestamos';
+
         return {
-          firstName: nom,
-          lastName: ape,
-          cedulaIdentidad: curp,
-          email: mail,
-          phone: ph,
-          extraFields: [armarExtraFieldsFilasCortas(op, nom, ape, curp, mail, ph)],
+          firstName,
+          lastName,
+          cedulaIdentidad,
+          email,
+          phone,
+          extraFields: [armarExtraFieldsFilasCortas(op, firstName, lastName, cedulaIdentidad, email, phone)],
           customerExtraFields: [{ showable: [{ in: 'workstation', format: 'both' }] }]
         };
       }
@@ -2522,6 +2522,7 @@
             '/enqueue';
           
           const datos = construirPayloadEnqueueTurno();
+          console.log('📤 Payload enviado a Filavirtual:', JSON.stringify(datos, null, 2));
           
           const response = await fetch(apiUrl, {
             method: 'POST',
