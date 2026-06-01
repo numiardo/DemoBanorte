@@ -1074,6 +1074,10 @@
 
       function buildExtraFields(detalle) {
         const CAMPOS_EXCLUIDOS = ['Tipo de atención sugerida', 'Tipo de atencion sugerida'];
+        const CAMPOS_RENOMBRAR = {
+          'Resumen del Cliente': 'Resumen IA',
+          'Resumen del cliente': 'Resumen IA'
+        };
 
         const fields = { showable: [{ in: 'workstation', format: 'both' }] };
 
@@ -1087,6 +1091,10 @@
           return txt.replace(/\*\*/g, '').replace(/\*/g, '').trim();
         }
 
+        function aplicarNombre(clave) {
+          return CAMPOS_RENOMBRAR[clave] || clave;
+        }
+
         // Formato 1: secciones marcadas con - **Header**: valor
         const partes = detalle.split(/\s*-\s*\*\*/);
         let encontrado = false;
@@ -1094,9 +1102,9 @@
         for (let i = 1; i < partes.length; i++) {
           const sepIdx = partes[i].indexOf('**:');
           if (sepIdx !== -1) {
-            const clave = partes[i].substring(0, sepIdx).trim();
+            const clave = aplicarNombre(partes[i].substring(0, sepIdx).trim());
             const valor = limpiarMd(partes[i].substring(sepIdx + 3));
-            if (clave && valor && !CAMPOS_EXCLUIDOS.includes(clave)) {
+            if (clave && valor && !CAMPOS_EXCLUIDOS.includes(partes[i].substring(0, sepIdx).trim())) {
               fields[clave] = valor;
               encontrado = true;
             }
@@ -1109,9 +1117,10 @@
           for (let i = 1; i < partesPlanas.length; i++) {
             const colonIdx = partesPlanas[i].indexOf(':');
             if (colonIdx !== -1) {
-              const clave = partesPlanas[i].substring(0, colonIdx).trim();
+              const claveOriginal = partesPlanas[i].substring(0, colonIdx).trim();
+              const clave = aplicarNombre(claveOriginal);
               const valor = limpiarMd(partesPlanas[i].substring(colonIdx + 1));
-              if (clave && valor && !CAMPOS_EXCLUIDOS.includes(clave)) {
+              if (clave && valor && !CAMPOS_EXCLUIDOS.includes(claveOriginal)) {
                 fields[clave] = valor;
                 encontrado = true;
               }
@@ -1124,7 +1133,7 @@
           fields['Detalle'] = limpiarMd(detalle);
         }
 
-        // Campo fijo de documentación al final
+        // Documentación siempre al final
         fields['Documentación'] = "<a href='https://drive.google.com/file/d/1m67Y3uzIx-U_BRprhYCn5RV_Is2IQP6s/view?usp=sharing' target='_blank' rel='noopener noreferrer'>Ver ID</a>";
 
         return [fields];
