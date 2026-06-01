@@ -1073,10 +1073,57 @@
       let ultimoDetalleExtraFields = DETALLE_EXTRA_FIELDS_DEFAULT;
 
       function buildExtraFields(detalle) {
-        return [{
-          showable: [{ in: 'workstation', format: 'both' }],
-          Detalle: detalle
-        }];
+        const fields = { showable: [{ in: 'workstation', format: 'both' }] };
+
+        if (!detalle || typeof detalle !== 'string') {
+          fields['Detalle'] = detalle || '';
+          return [fields];
+        }
+
+        function limpiarMd(txt) {
+          return txt.replace(/\*\*/g, '').replace(/\*/g, '').trim();
+        }
+
+        // Formato 1: secciones marcadas con - **Header**: valor
+        // Dividimos por el patrón " - **" que precede a cada encabezado
+        const partes = detalle.split(/\s*-\s*\*\*/);
+        let encontrado = false;
+
+        for (let i = 1; i < partes.length; i++) {
+          // Cada parte luce como: "NombreCampo**: contenido del valor"
+          const sepIdx = partes[i].indexOf('**:');
+          if (sepIdx !== -1) {
+            const clave = partes[i].substring(0, sepIdx).trim();
+            const valor = limpiarMd(partes[i].substring(sepIdx + 3));
+            if (clave && valor) {
+              fields[clave] = valor;
+              encontrado = true;
+            }
+          }
+        }
+
+        // Formato 2 (sin markdown): - Header: valor
+        if (!encontrado) {
+          const partesPlanas = detalle.split(/\s*-\s+(?=[A-ZÁÉÍÓÚÑ])/);
+          for (let i = 1; i < partesPlanas.length; i++) {
+            const colonIdx = partesPlanas[i].indexOf(':');
+            if (colonIdx !== -1) {
+              const clave = partesPlanas[i].substring(0, colonIdx).trim();
+              const valor = limpiarMd(partesPlanas[i].substring(colonIdx + 1));
+              if (clave && valor) {
+                fields[clave] = valor;
+                encontrado = true;
+              }
+            }
+          }
+        }
+
+        // Fallback: todo en un solo campo
+        if (!encontrado) {
+          fields['Detalle'] = limpiarMd(detalle);
+        }
+
+        return [fields];
       }
 
       function buildDatosEnqueue(usuarioActual, nombreActual) {
