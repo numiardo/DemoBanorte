@@ -13,14 +13,16 @@
       /* Paleta Banamex */
       --bnmx-red: #CC0000;
       --bnmx-red-dark: #A80000;
+      --bnmx-teal: #004B43;
+      --bnmx-teal-mid: #006B5E;
       --bnmx-dark: #1A1A1A;
       /* Alias para compatibilidad con el CSS existente */
       --br-orange: var(--bnmx-red);
       --br-orange-dark: var(--bnmx-red-dark);
-      --br-mint: #F5E8E0;
-      --br-mint-light: #EDE0D8;
-      --br-cream: #FEF5F0;
-      --numia-azul: var(--bnmx-red);
+      --br-mint: #D6EDEA;
+      --br-mint-light: #C2E3DF;
+      --br-cream: #EAF7F5;
+      --numia-azul: var(--bnmx-teal);
       --numia-azul-oscuro: var(--bnmx-dark);
       --numia-success: #00A651;
       --numia-text: #1A1A1A;
@@ -35,7 +37,7 @@
     
     body {
       font-family: 'Roboto', Arial, sans-serif;
-      background: #f5f5f5;
+      background: linear-gradient(145deg, #003D36 0%, #005D52 100%);
       color: var(--numia-text);
       min-height: 100vh;
       display: flex;
@@ -63,10 +65,10 @@
     
     /* Header del tótem */
     .totem-header {
-      background: #ffffff;
-      border-bottom: 4px solid var(--bnmx-red);
+      background: var(--bnmx-teal);
+      border-bottom: 3px solid var(--bnmx-red);
       padding: 1.25rem 2rem;
-      color: var(--bnmx-dark);
+      color: #ffffff;
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -433,7 +435,7 @@
     
     .opcion-card.presencial:hover {
       border-color: var(--numia-azul);
-      box-shadow: 0 8px 24px rgba(204, 0, 0, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 75, 67, 0.35);
     }
     
     .opcion-card.disabled {
