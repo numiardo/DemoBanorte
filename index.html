@@ -1080,9 +1080,6 @@
         const secciones = parsearSeccionesAPI(detalle);
         Object.assign(campos, secciones);
 
-        // Resumen completo como "Resumen IA" (antes "Resumen del Cliente")
-        campos['Resumen IA'] = detalle;
-
         // Documentación al final
         campos['Documentación'] = "<a href='https://drive.google.com/file/d/1m67Y3uzIx-U_BRprhYCn5RV_Is2IQP6s/view?usp=sharing' target='_blank' rel='noopener noreferrer'>Ver ID</a>";
 
