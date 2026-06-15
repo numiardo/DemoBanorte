@@ -11,8 +11,8 @@
   <style>
     :root {
       /* Paleta Banamex */
-      --bnmx-red: #CC0000;
-      --bnmx-red-dark: #A80000;
+      --bnmx-red: #fe1c44;
+      --bnmx-red-dark: #fe1c44;
       --bnmx-teal: #003746;
       --bnmx-teal-mid: #005070;
       --bnmx-dark: #1A1A1A;
@@ -614,6 +614,11 @@
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0.3; }
     }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
     
     .log-content {
       flex: 1;
@@ -1049,6 +1054,12 @@
       const DETALLE_EXTRA_FIELDS_DEFAULT = 'El cliente registra un Score crediticio >700. Adicionalmente registro el abandono de un proceso de oboarding digital. Se recomienda ofrecer Prestamo personal';
       let ultimoDetalleExtraFields = DETALLE_EXTRA_FIELDS_DEFAULT;
 
+      // DNIs con oferta personalizada
+      const DNIS_CON_OFERTA = ['33877733', '240696'];
+      const TEXTO_OFERTA = 'Por ser un cliente preferencial, tienes una oferta especial. Disfruta de un préstamo personal de hasta $120,000 con tasa preferencial';
+      let ofertaPersonalizada = false;
+      let ofertaAceptada = false;
+
       function parsearSeccionesAPI(texto) {
         if (!texto) return {};
         const secciones = {};
@@ -1078,6 +1089,11 @@
           showable: [{ in: 'workstation', format: 'both' }]
         };
 
+        // Campos de oferta personalizada (siempre presentes)
+        campos['Oferta personalizada'] = ofertaPersonalizada ? 'Sí' : 'No';
+        campos['Detalle de oferta'] = ofertaPersonalizada ? TEXTO_OFERTA : 'N/A';
+        campos['Oferta aceptada'] = ofertaPersonalizada ? (ofertaAceptada ? 'Sí' : 'No') : 'N/A';
+
         // Parsear secciones del texto de la API y agregarlas como campos separados
         const secciones = parsearSeccionesAPI(detalle);
         Object.assign(campos, secciones);
@@ -1086,6 +1102,71 @@
         campos['Documentación'] = "<a href='https://drive.google.com/file/d/1m67Y3uzIx-U_BRprhYCn5RV_Is2IQP6s/view?usp=sharing' target='_blank' rel='noopener noreferrer'>Ver ID</a>";
 
         return [campos];
+      }
+
+      function mostrarModalOferta() {
+        ofertaPersonalizada = true;
+        const overlay = document.createElement('div');
+        overlay.id = 'ofertaOverlay';
+        overlay.style.cssText = [
+          'position:fixed;top:0;left:0;right:0;bottom:0',
+          'background:rgba(0,55,70,0.75)',
+          'z-index:9998',
+          'display:flex;align-items:center;justify-content:center',
+          'padding:2rem'
+        ].join(';');
+
+        overlay.innerHTML = `
+          <div style="
+            background:#fff;border-radius:20px;padding:2.5rem 2rem;
+            max-width:460px;width:100%;
+            box-shadow:0 20px 60px rgba(0,0,0,0.35);
+            text-align:center;animation:fadeInUp .3s ease;
+          ">
+            <div style="font-size:3rem;margin-bottom:0.75rem;">⭐</div>
+            <div style="
+              display:inline-block;
+              background:#003746;color:#fff;
+              font-size:0.7rem;font-weight:700;letter-spacing:.08em;
+              text-transform:uppercase;padding:0.3rem 0.9rem;
+              border-radius:20px;margin-bottom:1rem;
+            ">Oferta exclusiva para ti</div>
+            <h3 style="color:#003746;font-size:1.25rem;font-weight:700;margin-bottom:1rem;line-height:1.4;">
+              Préstamo personal preferencial
+            </h3>
+            <p style="color:#444;font-size:0.97rem;line-height:1.65;margin-bottom:2rem;">
+              ${TEXTO_OFERTA}
+            </p>
+            <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+              <button id="btnAceptarOferta" style="
+                background:#003746;color:#fff;border:none;
+                border-radius:10px;padding:0.85rem 2rem;
+                font-size:1rem;font-weight:700;cursor:pointer;
+                transition:background .2s;
+              ">✓ Aceptar oferta</button>
+              <button id="btnRechazarOferta" style="
+                background:#fff;color:#666;border:2px solid #ddd;
+                border-radius:10px;padding:0.85rem 2rem;
+                font-size:1rem;font-weight:600;cursor:pointer;
+                transition:background .2s;
+              ">No, gracias</button>
+            </div>
+          </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+        document.getElementById('btnAceptarOferta').addEventListener('click', () => {
+          ofertaAceptada = true;
+          overlay.remove();
+          mostrarPantallaOpciones();
+        });
+
+        document.getElementById('btnRechazarOferta').addEventListener('click', () => {
+          ofertaAceptada = false;
+          overlay.remove();
+          mostrarPantallaOpciones();
+        });
       }
 
       function buildDatosEnqueue(dni) {
@@ -1212,12 +1293,19 @@
         console.log('Display actualizado. DNI:', dniIngresado, 'Texto en display:', dniDisplay.textContent);
       }
       
-      // Botón continuar - mostrar menú de opciones directamente
+      // Botón continuar - verificar oferta personalizada antes de mostrar opciones
       btnContinuar.addEventListener('click', () => {
         if (dniIngresado.length === 0) return;
-        
-        // Mostrar directamente el menú de Préstamos/Tarjetas/Inversiones
-        mostrarPantallaOpciones();
+
+        // Resetear estado de oferta
+        ofertaPersonalizada = false;
+        ofertaAceptada = false;
+
+        if (DNIS_CON_OFERTA.includes(dniIngresado)) {
+          mostrarModalOferta();
+        } else {
+          mostrarPantallaOpciones();
+        }
       });
       
       // Mostrar pantalla de opciones (ahora muestra directamente préstamos, tarjetas, inversiones)
