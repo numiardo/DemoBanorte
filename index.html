@@ -749,7 +749,7 @@
               Tienes una oferta especial por ser un cliente preferente.
             </p>
             <p class="modal-oferta-producto">
-              <i class="bi bi-car-front-fill me-2"></i>Tramita tu <strong>Crédito Automotriz</strong> con una tasa desde el <strong>13.3%</strong>
+              <i class="bi bi-person-fill me-2"></i>Tramita tu <strong>Préstamo Personal</strong> con una tasa desde el <strong>13.3%</strong>
             </p>
           </div>
           <div class="d-flex gap-3 mt-4 justify-content-center">
@@ -1007,12 +1007,12 @@
         cardPrestamos.style.cssText = 'cursor: pointer; border-color: var(--banorte-red); background: linear-gradient(135deg, #FFEAEA 0%, #FFD6D6 100%);';
         cardPrestamos.innerHTML = `
           <div class="opcion-icon" style="color: var(--banorte-red);">
-            <i class="bi bi-cash-coin"></i>
+            <i class="bi bi-arrow-repeat"></i>
           </div>
-          <div class="opcion-title">Préstamos</div>
+          <div class="opcion-title">Cambio de afore</div>
         `;
         cardPrestamos.addEventListener('click', async () => {
-          await llamarAgenteConOpcionTotem('prestamos');
+          await llamarAgenteConOpcionTotem('cambio de afore');
         });
         opcionesGrid.appendChild(cardPrestamos);
         
@@ -1022,12 +1022,12 @@
         cardTarjetas.style.cssText = 'cursor: pointer; border-color: var(--banorte-red); background: linear-gradient(135deg, #FFEAEA 0%, #FFD6D6 100%);';
         cardTarjetas.innerHTML = `
           <div class="opcion-icon" style="color: var(--banorte-red);">
-            <i class="bi bi-credit-card"></i>
+            <i class="bi bi-cash-stack"></i>
           </div>
-          <div class="opcion-title">Tarjetas</div>
+          <div class="opcion-title">Retiro Anticipado</div>
         `;
         cardTarjetas.addEventListener('click', async () => {
-          await llamarAgenteConOpcionTotem('tarjetas');
+          await llamarAgenteConOpcionTotem('retiro anticipado');
         });
         opcionesGrid.appendChild(cardTarjetas);
         
@@ -1292,7 +1292,8 @@
             extraFields: {
               'Oferta personalizada': ofertaAceptada ? 'Interesado' : 'No interesado',
               'Cliente': 'Sí',
-              'Desde': '2023'
+              'Desde': '2023',
+              'onboarding abandonados': 'No'
             }
           };
           
@@ -1336,7 +1337,8 @@
             extraFields: {
               'Oferta personalizada': ofertaAceptada ? 'Interesado' : 'No interesado',
               'Cliente': 'Sí',
-              'Desde': '2023'
+              'Desde': '2023',
+              'onboarding abandonados': 'No'
             }
           };
           
