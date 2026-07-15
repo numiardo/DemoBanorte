@@ -805,8 +805,8 @@
             <div class="form-error" id="errorApellido" style="display: none;"></div>
           </div>
           <div class="form-group">
-            <label for="inputDni">DNI</label>
-            <input type="text" id="inputDni" name="dni" placeholder="Ingrese su DNI" required>
+            <label for="inputDni">RFC</label>
+            <input type="text" id="inputDni" name="dni" placeholder="Ingrese su RFC" required>
             <div class="form-error" id="errorDni" style="display: none;"></div>
           </div>
           <div class="form-group">
@@ -940,7 +940,7 @@
         }
         if (!dni) {
           const err = document.getElementById('errorDni');
-          if (err) { err.textContent = 'Ingrese su DNI'; err.style.display = 'block'; }
+          if (err) { err.textContent = 'Ingrese su RFC'; err.style.display = 'block'; }
           valid = false;
         }
         if (!email) {
@@ -1022,9 +1022,9 @@
         // Opción Tarjetas
         const cardTarjetas = document.createElement('div');
         cardTarjetas.className = 'opcion-card';
-        cardTarjetas.style.cssText = 'cursor: pointer; border-color: #555; background: linear-gradient(135deg, #F0F0F0 0%, #E0E0E0 100%);';
+        cardTarjetas.style.cssText = 'cursor: pointer; border-color: var(--banorte-red); background: linear-gradient(135deg, #FFEAEA 0%, #FFD6D6 100%);';
         cardTarjetas.innerHTML = `
-          <div class="opcion-icon" style="color: #333;">
+          <div class="opcion-icon" style="color: var(--banorte-red);">
             <i class="bi bi-credit-card"></i>
           </div>
           <div class="opcion-title">Tarjetas</div>
@@ -1037,9 +1037,9 @@
         // Opción Inversiones
         const cardInversiones = document.createElement('div');
         cardInversiones.className = 'opcion-card';
-        cardInversiones.style.cssText = 'cursor: pointer; border-color: var(--numia-success); background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);';
+        cardInversiones.style.cssText = 'cursor: pointer; border-color: var(--banorte-red); background: linear-gradient(135deg, #FFEAEA 0%, #FFD6D6 100%);';
         cardInversiones.innerHTML = `
-          <div class="opcion-icon" style="color: var(--numia-success);">
+          <div class="opcion-icon" style="color: var(--banorte-red);">
             <i class="bi bi-graph-up-arrow"></i>
           </div>
           <div class="opcion-title">Inversiones</div>
@@ -1412,7 +1412,7 @@
         
         if (confirmacionMessage) {
           confirmacionMessage.innerHTML = `
-            Lo llamaremos. <strong>${formNombre} ${formApellido}</strong>, DNI: <strong>${formDni}</strong>
+            Lo llamaremos. <strong>${formNombre} ${formApellido}</strong>, RFC: <strong>${formDni}</strong>
           `;
         }
       }
