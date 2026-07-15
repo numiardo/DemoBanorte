@@ -3,30 +3,25 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Banamex - Tótem de Atención</title>
+  <title>Banorte – Banco en Línea</title>
   <link rel="icon" type="image/png" href="images/N.png" />
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      /* Paleta Banamex */
-      --bnmx-red: #fe1c44;
-      --bnmx-red-dark: #fe1c44;
-      --bnmx-teal: #003746;
-      --bnmx-teal-mid: #005070;
-      --bnmx-dark: #1A1A1A;
-      /* Alias para compatibilidad con el CSS existente */
-      --br-orange: var(--bnmx-red);
-      --br-orange-dark: var(--bnmx-red-dark);
-      --br-mint: #D6EDEA;
-      --br-mint-light: #C2E3DF;
-      --br-cream: #EAF7F5;
-      --numia-azul: var(--bnmx-teal);
-      --numia-azul-oscuro: var(--bnmx-dark);
-      --numia-success: #00A651;
-      --numia-text: #1A1A1A;
+      --numia-azul: #E31837;
+      --numia-azul-oscuro: #1C1C1C;
+      --numia-azul-claro: #FFEAEA;
+      --numia-azul-muy-claro: #FFF5F5;
+      --numia-success: #10b981;
+      --numia-text: #231F20;
       --numia-text-light: #6b6b6b;
+      --numia-border: #e5e7eb;
+      --numia-bg: #f7f7f7;
+      --banorte-red: #E31837;
+      --banorte-red-dark: #B51028;
+      --banorte-dark: #1C1C1C;
     }
     
     * {
@@ -37,7 +32,7 @@
     
     body {
       font-family: 'Roboto', Arial, sans-serif;
-      background: #ffffff;
+      background: linear-gradient(160deg, #f0f0f0 0%, #faf0f0 60%, #f5e8e8 100%);
       color: var(--numia-text);
       min-height: 100vh;
       display: flex;
@@ -53,8 +48,8 @@
       max-width: 600px;
       width: 100%;
       background: white;
-      border-radius: 24px;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      border-radius: 12px;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.18);
       overflow: hidden;
       position: relative;
       height: calc(100vh - 4rem);
@@ -63,23 +58,55 @@
       flex-shrink: 0;
     }
     
-    /* Header del tótem */
+    /* Header del tótem – estilo Banorte */
     .totem-header {
-      background: var(--bnmx-teal);
-      border-bottom: 3px solid var(--bnmx-red);
-      padding: 1.25rem 2rem;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
       flex-shrink: 0;
     }
 
-    .totem-header .header-logo {
-      height: 40px;
-      width: auto;
-      display: block;
+    /* Barra superior oscura */
+    .banorte-topbar {
+      background: var(--banorte-dark);
+      padding: 0.45rem 1.5rem;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .banorte-topbar .topbar-left {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .banorte-topbar .topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      opacity: 0.85;
+    }
+
+    /* Barra con logo y navegación */
+    .banorte-navbar {
+      background: var(--banorte-red);
+      padding: 0.65rem 1.5rem;
+      display: flex;
+      align-items: center;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+    }
+
+    .banorte-logo-img {
+      height: 34px;
       object-fit: contain;
+      filter: brightness(0) invert(1);
+    }
+
+    .totem-logo {
+      display: none;
     }
     
     .totem-content {
@@ -93,254 +120,87 @@
       min-height: 0;
     }
     
-    /* Pantalla 1: Ingreso de DNI */
-    .screen-dni {
+    /* Pantalla 1: Formulario (Nombre, Apellido, DNI, Email) */
+    .screen-form {
       width: 100%;
       max-width: 500px;
-      text-align: center;
+      text-align: left;
     }
     
-    .screen-dni h1 {
-      font-size: 1.8rem;
+    .screen-form h1 {
+      font-size: 1.6rem;
       font-weight: 700;
       color: var(--numia-text);
-      margin-bottom: 0.75rem;
-    }
-    
-    .screen-dni .instruction {
-      font-size: 1rem;
-      color: var(--numia-azul);
-      margin-bottom: 1.5rem;
-      font-weight: 500;
-    }
-    
-    .dni-display {
-      background: white;
-      color: var(--numia-text);
-      font-size: 1.5rem;
-      font-weight: 600;
-      padding: 1rem;
-      border: 3px solid var(--br-orange);
-      border-radius: 12px;
-      margin-bottom: 1.5rem;
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: 'Courier New', monospace;
-      letter-spacing: 0.2rem;
-    }
-    
-    .dni-display.empty {
-      color: rgba(0, 0, 0, 0.3);
-    }
-    
-    .dni-display.empty:before {
-      content: 'Ingrese su DNI';
-    }
-    
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 0.5rem;
-      margin-bottom: 0.5rem;
-      max-width: 350px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .keypad-row-bottom {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 0.5rem;
-      max-width: 350px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-bottom: 0.75rem;
-    }
-    
-    .keypad-btn {
-      background: white;
-      color: var(--numia-text);
-      border: 1px solid #000;
-      border-radius: 8px;
-      padding: 1rem;
-      font-size: 1.5rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .keypad-btn:hover {
-      background: #f5f5f5;
-      transform: scale(1.02);
-    }
-    
-    .keypad-btn:active {
-      transform: scale(0.98);
-      background: #e5e5e5;
-    }
-    
-    .keypad-btn.delete {
-      background: white;
-      color: var(--numia-text);
-      border: 1px solid #000;
-      font-size: 1.5rem;
-    }
-    
-    .keypad-btn.delete:hover {
-      background: #f5f5f5;
-    }
-    
-    .keypad-btn.empty {
-      background: transparent;
-      border: none;
-      cursor: default;
-    }
-    
-    .keypad-btn.empty:hover {
-      transform: none;
-      background: transparent;
-    }
-    
-    .btn-continuar {
-      width: 100%;
-      max-width: 350px;
-      background: var(--br-orange);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 1rem;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.3s;
-      margin-top: 0.5rem;
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-    }
-    
-    .btn-continuar:hover {
-      background: var(--br-orange-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(204, 0, 0, 0.4);
-    }
-    
-    .btn-continuar:active {
-      transform: translateY(0);
-    }
-    
-    .btn-continuar.active {
-      background: var(--br-orange);
-    }
-    
-    .btn-continuar:disabled {
-      background: #d1d5db;
-      cursor: not-allowed;
-      transform: none;
-    }
-    
-    .btn-continuar:disabled:hover {
-      background: #d1d5db;
-      transform: none;
-      box-shadow: none;
-    }
-    
-    /* Pantalla inicial: Menú de selección */
-    .screen-menu-inicial {
-      width: 100%;
-      max-width: 500px;
+      margin-bottom: 0.4rem;
       text-align: center;
-      display: block;
+      padding-bottom: 0.6rem;
+      border-bottom: 3px solid var(--banorte-red);
     }
     
-    .screen-menu-inicial.hidden {
-      display: none;
-    }
-    
-    .screen-menu-inicial h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--numia-text);
-      margin-bottom: 0.5rem;
-    }
-    
-    .screen-menu-inicial .subtitle {
+    .screen-form .instruction {
       font-size: 0.95rem;
       color: var(--numia-text-light);
-      margin-bottom: 1.5rem;
+      margin-bottom: 1.25rem;
+      text-align: center;
     }
     
-    /* Pantalla Avatar */
-    .screen-avatar {
-      width: 100vw;
-      height: 100vh;
-      display: none;
-      flex-direction: column;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      padding: 0;
-      margin: 0;
-      z-index: 9999;
-      background: white;
+    .screen-form .form-group {
+      margin-bottom: 1rem;
     }
     
-    .screen-avatar.active {
-      display: flex;
+    .screen-form .form-group label {
+      display: block;
+      font-weight: 600;
+      color: var(--numia-text);
+      margin-bottom: 0.35rem;
+      font-size: 0.9rem;
     }
     
-    .screen-avatar iframe {
-      width: 100vw;
-      height: 100vh;
+    .screen-form .form-group input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid var(--numia-border, #e5e7eb);
+      border-radius: 10px;
+      font-size: 1rem;
+      color: var(--numia-text);
+      transition: border-color 0.2s;
+    }
+    
+    .screen-form .form-group input:focus {
+      outline: none;
+      border-color: var(--numia-azul);
+    }
+    
+    .screen-form .form-group input::placeholder {
+      color: var(--numia-text-light);
+      opacity: 0.8;
+    }
+    
+    .screen-form .btn-continuar-form {
+      width: 100%;
+      margin-top: 1.25rem;
+      background: var(--banorte-red);
+      color: white;
       border: none;
-      flex: 1;
-      min-height: 0;
+      border-radius: 8px;
+      padding: 0.95rem;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      letter-spacing: 0.02em;
+      transition: all 0.3s;
     }
     
-    /* Botón para cerrar el avatar */
-    .btn-cerrar-avatar {
-      position: fixed !important;
-      top: 20px !important;
-      right: 20px !important;
-      z-index: 10000 !important;
-      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%) !important;
-      color: white !important;
-      border: 3px solid white !important;
-      border-radius: 50px !important;
-      padding: 0.75rem 1.5rem !important;
-      font-size: 1rem !important;
-      font-weight: 700 !important;
-      cursor: pointer !important;
-      box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5), 0 0 0 3px rgba(255, 107, 107, 0.2) !important;
-      display: flex !important;
-      align-items: center !important;
-      gap: 0.5rem !important;
-      transition: all 0.3s !important;
-      animation: pulse 2s infinite !important;
-      visibility: visible !important;
-      opacity: 1 !important;
+    .screen-form .btn-continuar-form:hover {
+      background: var(--banorte-red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(227, 24, 55, 0.45);
     }
     
-    .btn-cerrar-avatar:hover {
-      background: linear-gradient(135deg, #ff5252 0%, #d32f2f 100%);
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 8px 24px rgba(255, 107, 107, 0.6), 0 0 0 4px rgba(255, 107, 107, 0.3);
-    }
-    
-    @keyframes pulse {
-      0%, 100% {
-        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.5), 0 0 0 3px rgba(255, 107, 107, 0.2);
-      }
-      50% {
-        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.7), 0 0 0 6px rgba(255, 107, 107, 0.3);
-      }
+    .screen-form .form-error {
+      color: #dc2626;
+      font-size: 0.85rem;
+      margin-top: 0.25rem;
     }
     
     /* Pantalla 2: Opciones de atención */
@@ -420,7 +280,7 @@
     
     .opcion-card.videollamada {
       border-color: var(--numia-success);
-      background: linear-gradient(135deg, var(--br-mint) 0%, var(--br-mint-light) 100%);
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
     }
     
     .opcion-card.videollamada:hover {
@@ -429,13 +289,13 @@
     }
     
     .opcion-card.presencial {
-      border-color: var(--numia-azul);
-      background: linear-gradient(135deg, var(--br-cream) 0%, var(--br-mint-light) 100%);
+      border-color: var(--banorte-red);
+      background: linear-gradient(135deg, #FFEAEA 0%, #FFD6D6 100%);
     }
     
     .opcion-card.presencial:hover {
-      border-color: var(--numia-azul);
-      box-shadow: 0 8px 24px rgba(0, 55, 70, 0.35);
+      border-color: var(--banorte-red);
+      box-shadow: 0 8px 24px rgba(227, 24, 55, 0.25);
     }
     
     .opcion-card.disabled {
@@ -457,7 +317,7 @@
     }
     
     .opcion-card.presencial .opcion-icon {
-      color: var(--numia-azul);
+      color: var(--banorte-red);
     }
     
     .opcion-title {
@@ -528,7 +388,7 @@
     }
     
     .tiempo-espera {
-      background: var(--br-mint-light);
+      background: #f0fdf4;
       border: 2px solid var(--numia-success);
       border-radius: 12px;
       padding: 1rem;
@@ -566,7 +426,7 @@
     }
     
     .btn-video:hover {
-      background: #008f47;
+      background: #059669;
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
       color: white;
@@ -613,15 +473,6 @@
     @keyframes blink {
       0%, 50% { opacity: 1; }
       51%, 100% { opacity: 0.3; }
-    }
-
-    @keyframes fadeInUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
     }
     
     .log-content {
@@ -751,6 +602,110 @@
       border-left-color: #4444ff;
     }
     
+    /* Modal Actinver */
+    .modal-actinver {
+      border-radius: 20px;
+      overflow: hidden;
+      border: none;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.18);
+    }
+
+    .modal-actinver-header {
+      background: var(--numia-azul-oscuro);
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-welcome-icon {
+      font-size: 3rem;
+      color: var(--banorte-red);
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-welcome-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--numia-text);
+      margin-bottom: 0.4rem;
+    }
+
+    .modal-last-visit {
+      font-size: 0.9rem;
+      color: var(--numia-text-light);
+      margin-bottom: 1rem;
+    }
+
+    .modal-oferta-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, var(--banorte-red), var(--banorte-red-dark));
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.3rem 0.9rem;
+      border-radius: 20px;
+      margin-bottom: 1.25rem;
+      letter-spacing: 0.03em;
+    }
+
+    .modal-oferta-card {
+      background: linear-gradient(135deg, #FFF5F5 0%, #FFEAEA 100%);
+      border: 2px solid var(--banorte-red);
+      border-radius: 14px;
+      padding: 1.1rem 1.25rem;
+    }
+
+    .modal-oferta-text {
+      font-size: 0.9rem;
+      color: var(--numia-text-light);
+      margin-bottom: 0.5rem;
+    }
+
+    .modal-oferta-producto {
+      font-size: 1rem;
+      color: var(--numia-text);
+      margin-bottom: 0;
+    }
+
+    .btn-modal-interesa {
+      background: var(--numia-azul);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s;
+      flex: 1;
+    }
+
+    .btn-modal-interesa:hover {
+      background: var(--banorte-red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(227, 24, 55, 0.35);
+    }
+
+    .btn-modal-no-interesa {
+      background: white;
+      color: var(--numia-text-light);
+      border: 2px solid var(--numia-border);
+      border-radius: 10px;
+      padding: 0.75rem 1.5rem;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.25s;
+      flex: 1;
+    }
+
+    .btn-modal-no-interesa:hover {
+      border-color: #aaa;
+      color: var(--numia-text);
+    }
+
     @media (max-width: 1024px) {
       body {
         flex-direction: column;
@@ -773,70 +728,94 @@
 <body>
   <script src="auth-portal.js"></script>
   <script>AuthPortal.require();</script>
+  <!-- Modal de bienvenida / oferta preferente -->
+  <div class="modal fade" id="modalBienvenida" tabindex="-1" aria-labelledby="modalBienvenidaLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content modal-actinver">
+        <div class="modal-actinver-header">
+          <img src="images/Logo.png" alt="Banorte" style="height: 32px; object-fit: contain;">
+        </div>
+        <div class="modal-body text-center px-4 pb-4">
+          <div class="modal-welcome-icon">
+            <i class="bi bi-person-check-fill"></i>
+          </div>
+          <h4 class="modal-welcome-title" id="modalBienvenidaLabel">
+            Bienvenido de vuelta, <span id="modalNombreCliente"></span>
+          </h4>
+          <p class="modal-last-visit">Tu última visita fue el: <strong>24 de junio del 2026</strong></p>
+          <div class="modal-oferta-badge">
+            <i class="bi bi-star-fill me-1"></i> Cliente Preferente
+          </div>
+          <div class="modal-oferta-card">
+            <p class="modal-oferta-text">
+              Tienes una oferta especial por ser un cliente preferente.
+            </p>
+            <p class="modal-oferta-producto">
+              <i class="bi bi-car-front-fill me-2"></i>Tramita tu <strong>Crédito Automotriz</strong> con una tasa desde el <strong>13.3%</strong>
+            </p>
+          </div>
+          <div class="d-flex gap-3 mt-4 justify-content-center">
+            <button type="button" class="btn-modal-interesa" id="btnMeInteresa">
+              <i class="bi bi-check-circle me-1"></i> Me interesa
+            </button>
+            <button type="button" class="btn-modal-no-interesa" id="btnNoInteresa">
+              No me interesa
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- Contenedor del tótem -->
   <div class="totem-container">
-    <!-- Header -->
+    <!-- Header Banorte -->
     <div class="totem-header">
-      <img src="images/Banamex-Logo.png" alt="Banamex" class="header-logo">
+      <!-- Barra superior oscura -->
+      <div class="banorte-topbar">
+        <span class="topbar-left">
+          <i class="bi bi-arrow-right-circle-fill"></i> GRUPO FINANCIERO BANORTE
+        </span>
+        <span class="topbar-right">
+          banorte.com
+        </span>
+      </div>
+      <!-- Barra roja con logo -->
+      <div class="banorte-navbar">
+        <img src="images/Logo.png" alt="Banorte" class="banorte-logo-img">
+      </div>
     </div>
     
     <!-- Contenido del tótem -->
     <div class="totem-content">
-      <!-- Pantalla inicial: Menú de selección -->
-      <div class="screen-menu-inicial" id="screenMenuInicial">
-        <h2>Seleccione una opción</h2>
-        <p class="subtitle">Elija cómo desea continuar</p>
-        <div class="opciones-grid" id="menuInicialGrid">
-          <!-- Opción Avatar -->
-          <div class="opcion-card" id="opcionAvatar" style="cursor: pointer; border-color: var(--numia-azul); background: linear-gradient(135deg, var(--br-cream) 0%, var(--br-mint-light) 100%);">
-            <div class="opcion-icon" style="color: var(--numia-azul);">
-              <i class="bi bi-person-circle"></i>
-            </div>
-            <div class="opcion-title">Avatar</div>
+      <!-- Pantalla 1: Formulario (Nombre, Apellido, DNI, Email) -->
+      <div class="screen-form" id="screenForm">
+        <h1>Banco en Línea</h1>
+        <div class="instruction">Te damos la bienvenida. Ingresa tus datos para continuar.</div>
+        
+        <form id="formDatos" novalidate>
+          <div class="form-group">
+            <label for="inputNombre">Nombre</label>
+            <input type="text" id="inputNombre" name="nombre" placeholder="Ingrese su nombre" required>
+            <div class="form-error" id="errorNombre" style="display: none;"></div>
           </div>
-          <!-- Opción Menú de opciones -->
-          <div class="opcion-card" id="opcionMenu" style="cursor: pointer; border-color: var(--numia-azul); background: linear-gradient(135deg, var(--br-cream) 0%, var(--br-mint-light) 100%);">
-            <div class="opcion-icon" style="color: var(--numia-azul);">
-              <i class="bi bi-list-ul"></i>
-            </div>
-            <div class="opcion-title">Menú de opciones</div>
+          <div class="form-group">
+            <label for="inputApellido">Apellido</label>
+            <input type="text" id="inputApellido" name="apellido" placeholder="Ingrese su apellido" required>
+            <div class="form-error" id="errorApellido" style="display: none;"></div>
           </div>
-        </div>
-      </div>
-      
-      <!-- Pantalla Avatar -->
-      <div class="screen-avatar" id="screenAvatar">
-        <iframe src="https://filavirtual.preprod.debmedia.com/Numiabot/#/TDNFYImANgm606yYSWyH" title="Avatar" allow="microphone; camera; autoplay" allowfullscreen></iframe>
-      </div>
-      
-      <!-- Pantalla 1: Ingreso de DNI -->
-      <div class="screen-dni" id="screenDni" style="display: none;">
-        <!-- Mensaje entre logo y teclado -->
-        <div class="instruction" style="margin-bottom: 1rem; font-size: 1rem; color: var(--numia-azul); font-weight: 500;">Bienvenido! Por favor ingrese su dni</div>
-        
-        <div class="dni-display empty" id="dniDisplay"></div>
-        
-        <div class="keypad">
-          <button class="keypad-btn" data-number="1">1</button>
-          <button class="keypad-btn" data-number="2">2</button>
-          <button class="keypad-btn" data-number="3">3</button>
-          <button class="keypad-btn" data-number="4">4</button>
-          <button class="keypad-btn" data-number="5">5</button>
-          <button class="keypad-btn" data-number="6">6</button>
-          <button class="keypad-btn" data-number="7">7</button>
-          <button class="keypad-btn" data-number="8">8</button>
-          <button class="keypad-btn" data-number="9">9</button>
-        </div>
-        
-        <div class="keypad-row-bottom">
-          <button class="keypad-btn empty"></button>
-          <button class="keypad-btn" data-number="0">0</button>
-          <button class="keypad-btn delete" id="btnDelete">
-            <i class="bi bi-arrow-left"></i>
-          </button>
-        </div>
-        
-        <button class="btn-continuar" id="btnContinuar" disabled>Continuar</button>
+          <div class="form-group">
+            <label for="inputDni">DNI</label>
+            <input type="text" id="inputDni" name="dni" placeholder="Ingrese su DNI" required>
+            <div class="form-error" id="errorDni" style="display: none;"></div>
+          </div>
+          <div class="form-group">
+            <label for="inputEmail">Email</label>
+            <input type="email" id="inputEmail" name="email" placeholder="Ingrese su email" required>
+            <div class="form-error" id="errorEmail" style="display: none;"></div>
+          </div>
+          <button type="submit" class="btn-continuar-form" id="btnContinuarForm">Continuar</button>
+        </form>
       </div>
       
       <!-- Pantalla 2: Opciones de atención -->
@@ -849,12 +828,6 @@
         </div>
       </div>
       
-      <!-- Pantalla: Tiempo de espera en sucursal -->
-      <div id="screenEspera" style="display:none; width:100%; max-width:500px; text-align:center;"></div>
-
-      <!-- Pantalla: Sucursales cercanas -->
-      <div id="screenSucursales" style="display:none; width:100%; max-width:500px; overflow-y:auto;"></div>
-
       <!-- Pantalla 3: Confirmación -->
       <div class="screen-confirmacion" id="screenConfirmacion">
         <div class="success-icon">
@@ -880,12 +853,6 @@
     </div>
   </div>
   
-  <!-- Botón Volver al menú - Siempre visible -->
-  <button class="btn-cerrar-avatar" id="btnCerrarAvatar" title="Volver al menú">
-    <i class="bi bi-x-circle"></i>
-    Volver al menú
-  </button>
-  
   <!-- Contenedor de Logs a la derecha -->
   <div class="log-container">
     <div class="log-header">
@@ -908,167 +875,10 @@
     </div>
   </div>
 
-  <!-- Botón Volver al menú - Siempre visible -->
-  <button class="btn-cerrar-avatar" id="btnCerrarAvatar" title="Volver al menú">
-    <i class="bi bi-x-circle"></i>
-    Volver al menú
-  </button>
-  
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Elementos de las pantallas iniciales
-      const screenMenuInicial = document.getElementById('screenMenuInicial');
-      const screenAvatar = document.getElementById('screenAvatar');
-      const opcionAvatar = document.getElementById('opcionAvatar');
-      const opcionMenu = document.getElementById('opcionMenu');
-      const btnCerrarAvatar = document.getElementById('btnCerrarAvatar');
-      
-      // Event listener para opción Avatar - Redirigir a página separada
-      if (opcionAvatar) {
-        opcionAvatar.addEventListener('click', () => {
-          console.log('🎭 Redirigiendo a página de Avatar...');
-          window.location.href = 'avatar.html';
-        });
-      }
-      
-      // Event listener para cerrar el avatar y volver al menú inicial
-      // Usar delegación de eventos para asegurar que funcione
-      document.addEventListener('click', function(e) {
-        if (e.target && (e.target.id === 'btnCerrarAvatar' || e.target.closest('#btnCerrarAvatar'))) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          // Si el avatar está activo, cerrarlo
-          if (screenAvatar && screenAvatar.classList.contains('active')) {
-            screenAvatar.classList.remove('active');
-          }
-          
-          // Mostrar el menú inicial
-          if (screenMenuInicial) {
-            screenMenuInicial.classList.remove('hidden');
-          }
-          
-          // Ocultar pantalla de opciones (préstamos, tarjetas, inversiones)
-          const screenOpcionesEl = document.getElementById('screenOpciones');
-          if (screenOpcionesEl) {
-            screenOpcionesEl.classList.remove('active');
-          }
-          
-          // Ocultar pantalla de confirmación si está activa
-          const screenConfirmacionEl = document.getElementById('screenConfirmacion');
-          if (screenConfirmacionEl) {
-            screenConfirmacionEl.classList.remove('active');
-          }
-          
-          // Ocultar otras pantallas
-          const screenDniEl = document.getElementById('screenDni');
-          if (screenDniEl) {
-            screenDniEl.style.display = 'none';
-          }
-          const screenEsperaEl = document.getElementById('screenEspera');
-          if (screenEsperaEl) screenEsperaEl.style.display = 'none';
-          const screenSucursalesEl = document.getElementById('screenSucursales');
-          if (screenSucursalesEl) screenSucursalesEl.style.display = 'none';
-
-          // Resetear log y estado journey
-          if (logContainer) logContainer.classList.remove('visible');
-          journeyCallPromise = null;
-          journeyMessageText = null;
-          
-          // Restaurar el padding del contenedor
-          const totemContent = document.querySelector('.totem-content');
-          if (totemContent) {
-            totemContent.style.padding = '1.5rem 2rem';
-          }
-          
-          // Mostrar el header del totem
-          const totemHeader = document.querySelector('.totem-header');
-          if (totemHeader) {
-            totemHeader.style.display = 'flex';
-          }
-        }
-      });
-      
-      // También agregar listener directo por si acaso
-      if (btnCerrarAvatar) {
-        btnCerrarAvatar.addEventListener('click', function(e) {
-          e.preventDefault();
-          e.stopPropagation();
-          
-          if (screenAvatar && screenAvatar.classList.contains('active')) {
-            screenAvatar.classList.remove('active');
-          }
-          
-          if (screenMenuInicial) {
-            screenMenuInicial.classList.remove('hidden');
-          }
-          
-          // Ocultar pantalla de opciones (préstamos, tarjetas, inversiones)
-          const screenOpcionesEl = document.getElementById('screenOpciones');
-          if (screenOpcionesEl) {
-            screenOpcionesEl.classList.remove('active');
-          }
-          
-          // Ocultar pantalla de confirmación si está activa
-          const screenConfirmacionEl = document.getElementById('screenConfirmacion');
-          if (screenConfirmacionEl) {
-            screenConfirmacionEl.classList.remove('active');
-          }
-          
-          const screenDniEl = document.getElementById('screenDni');
-          if (screenDniEl) {
-            screenDniEl.style.display = 'none';
-          }
-          const screenEsperaEl2 = document.getElementById('screenEspera');
-          if (screenEsperaEl2) screenEsperaEl2.style.display = 'none';
-          const screenSucursalesEl2 = document.getElementById('screenSucursales');
-          if (screenSucursalesEl2) screenSucursalesEl2.style.display = 'none';
-
-          // Resetear log y estado journey
-          if (logContainer) logContainer.classList.remove('visible');
-          journeyCallPromise = null;
-          journeyMessageText = null;
-
-          const totemContent = document.querySelector('.totem-content');
-          if (totemContent) {
-            totemContent.style.padding = '1.5rem 2rem';
-          }
-          
-          const totemHeader = document.querySelector('.totem-header');
-          if (totemHeader) {
-            totemHeader.style.display = 'flex';
-          }
-        });
-      }
-      
-      // Event listener para opción Menú de opciones
-      if (opcionMenu) {
-        opcionMenu.addEventListener('click', () => {
-          screenMenuInicial.classList.add('hidden');
-          screenAvatar.classList.remove('active');
-          
-          // Mostrar pantalla DNI
-          const screenDniElement = document.getElementById('screenDni');
-          if (screenDniElement) {
-            screenDniElement.style.display = 'block';
-          }
-          
-          // Restaurar el padding del contenedor
-          const totemContent = document.querySelector('.totem-content');
-          if (totemContent) {
-            totemContent.style.padding = '1.5rem 2rem';
-          }
-          
-          // Mostrar el header del totem
-          const totemHeader = document.querySelector('.totem-header');
-          if (totemHeader) {
-            totemHeader.style.display = 'flex';
-          }
-        });
-      }
-      
       // Configuración de la API Journey Builder
       const JOURNEY_API_URL = 'https://api.journeybuilder.numia.co/api/v1/run/d83a2fbd-f8d0-468f-9ecd-375709fd149f?stream=false';
       const JOURNEY_API_KEY = 'sk-WfTsCY302RrciqoVRYAZWruD9mpyPKatAo8GU8tyzIM';
@@ -1078,148 +888,23 @@
         { titulo: 'Sugerencia de canal', detalle: 'Priorización del canal de atención.' },
         { titulo: 'Calcular prioridad', detalle: 'Analisis del estado actual de la sucursal comparado con el cliente.' }
       ];
-
-      const DETALLE_EXTRA_FIELDS_DEFAULT = 'El cliente registra un Score crediticio >700. Adicionalmente registro el abandono de un proceso de oboarding digital. Se recomienda ofrecer Prestamo personal';
-      let ultimoDetalleExtraFields = DETALLE_EXTRA_FIELDS_DEFAULT;
-
-      // DNIs con oferta personalizada
-      const DNIS_CON_OFERTA = ['33877733', '240696', '33689449'];
-      const TEXTO_OFERTA = 'Por ser un cliente preferencial, tienes una oferta especial. Disfruta de un préstamo personal de hasta $120,000 con tasa preferencial';
-      let ofertaPersonalizada = false;
-      let ofertaAceptada = false;
-
-      // Estado de derivación a sucursal
-      let derivadoSucursal = false;
-
-      // Datos dummy de sucursales cercanas
-      const SUCURSALES_CERCANAS = [
-        { nombre: 'Sucursal Balderas',  espera: 5, direccion: 'Av. Juárez 76, Colonia Centro',                   minutosCoche: 6 },
-        { nombre: 'Sucursal Reforma',   espera: 0, direccion: 'Av. P.º de la Reforma 347, Cuauhtémoc',           minutosCoche: 9 }
-      ];
-
-      function parsearSeccionesAPI(texto) {
-        if (!texto) return {};
-        const secciones = {};
-
-        // Eliminar texto de cierre como "Si necesitas más información..."
-        let txt = texto.replace(/\s*Si necesitas[^.]*\.?/i, '').trim();
-
-        // Dividir en cada inicio de sección "- Key:" (con o sin **negrita**)
-        const partes = txt.split(/(?=\s*[-–]\s*\*{0,2}[A-ZÁÉÍÓÚ][^:\*\n]{1,60}?\*{0,2}\s*:)/);
-
-        for (const parte of partes) {
-          const match = parte.match(/^\s*[-–]\s*\*{0,2}([^:\*\n]{2,60}?)\*{0,2}\s*:\s*([\s\S]*)/);
-          if (match) {
-            const key = match[1].trim();
-            const value = match[2].trim().replace(/\*\*/g, '').trim();
-            // Excluir "Tipo de atención sugerida"
-            if (key && value && !/tipo de atenci[oó]n/i.test(key)) {
-              secciones[key] = value;
-            }
-          }
-        }
-        return secciones;
-      }
-
-      function buildExtraFields(detalle) {
-        const campos = {
-          showable: [{ in: 'workstation', format: 'both' }]
-        };
-
-        // Campos de oferta personalizada (siempre presentes)
-        campos['Oferta personalizada'] = ofertaPersonalizada ? 'Sí' : 'No';
-        campos['Detalle de oferta'] = ofertaPersonalizada ? TEXTO_OFERTA : 'N/A';
-        campos['Oferta aceptada'] = ofertaPersonalizada ? (ofertaAceptada ? 'Sí' : 'No') : 'N/A';
-        campos['Derivado de sucursal con mayor tiempo de espera'] = derivadoSucursal ? 'Sí' : 'No';
-
-        // Parsear secciones del texto de la API y agregarlas como campos separados
-        const secciones = parsearSeccionesAPI(detalle);
-        Object.assign(campos, secciones);
-
-        // Documentación al final
-        campos['Documentación'] = "<a href='https://drive.google.com/file/d/1m67Y3uzIx-U_BRprhYCn5RV_Is2IQP6s/view?usp=sharing' target='_blank' rel='noopener noreferrer'>Ver ID</a>";
-
-        return [campos];
-      }
-
-      function mostrarModalOferta() {
-        ofertaPersonalizada = true;
-        const overlay = document.createElement('div');
-        overlay.id = 'ofertaOverlay';
-        overlay.style.cssText = [
-          'position:absolute;top:0;left:0;right:0;bottom:0',
-          'background:rgba(0,55,70,0.75)',
-          'z-index:100',
-          'display:flex;align-items:center;justify-content:center',
-          'padding:1.5rem'
-        ].join(';');
-
-        overlay.innerHTML = `
-          <div style="
-            background:#fff;border-radius:20px;padding:2.5rem 2rem;
-            width:100%;
-            box-shadow:0 20px 60px rgba(0,0,0,0.35);
-            text-align:center;animation:fadeInUp .3s ease;
-          ">
-            <div style="font-size:3rem;margin-bottom:1rem;">⭐</div>
-            <h3 style="color:#003746;font-size:1.4rem;font-weight:700;margin-bottom:2rem;line-height:1.4;">
-              Tienes un préstamo preaprobado
-            </h3>
-            <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
-              <button id="btnAceptarOferta" style="
-                background:#003746;color:#fff;border:none;
-                border-radius:10px;padding:0.85rem 2rem;
-                font-size:1rem;font-weight:700;cursor:pointer;
-              ">Me interesa</button>
-              <button id="btnRechazarOferta" style="
-                background:#fff;color:#666;border:2px solid #ddd;
-                border-radius:10px;padding:0.85rem 2rem;
-                font-size:1rem;font-weight:600;cursor:pointer;
-              ">No me interesa</button>
-            </div>
-          </div>
-        `;
-
-        // Inyectar dentro del totem (no en body) para que quede solo sobre el panel izquierdo
-        const totemContainer = document.querySelector('.totem-container');
-        (totemContainer || document.body).appendChild(overlay);
-
-        document.getElementById('btnAceptarOferta').addEventListener('click', () => {
-          ofertaAceptada = true;
-          overlay.remove();
-          // Los trámites ya están visibles; no es necesario regenerarlos
-        });
-
-        document.getElementById('btnRechazarOferta').addEventListener('click', () => {
-          ofertaAceptada = false;
-          overlay.remove();
-          // Los trámites ya están visibles; no es necesario regenerarlos
-        });
-      }
-
-      function buildDatosEnqueue(dni) {
-        return {
-     
-          dni: dni,
-          extraFields: buildExtraFields(ultimoDetalleExtraFields || DETALLE_EXTRA_FIELDS_DEFAULT)
-        };
-      }
       
-      // Variables de estado
-      let dniIngresado = '';
+      // Variables de estado (datos del formulario)
+      let formNombre = '';
+      let formApellido = '';
+      let formDni = '';
+      let formEmail = '';
       let analisisCompletado = false;
       let recomendacionVideollamada = false;
       let messageText = null;
-      let journeyCallPromise = null;
-      let journeyMessageText = null;
+      let ofertaAceptada = false;
       
       // Elementos del DOM
-      const screenDni = document.getElementById('screenDni');
+      const screenForm = document.getElementById('screenForm');
       const screenOpciones = document.getElementById('screenOpciones');
       const screenConfirmacion = document.getElementById('screenConfirmacion');
-      const dniDisplay = document.getElementById('dniDisplay');
-      const btnContinuar = document.getElementById('btnContinuar');
-      const btnDelete = document.getElementById('btnDelete');
+      const formDatos = document.getElementById('formDatos');
+      const btnContinuarForm = document.getElementById('btnContinuarForm');
       const opcionesGrid = document.getElementById('opcionesGrid');
       const atencionSection = document.getElementById('atencionSection');
       const stepsContainer = document.getElementById('stepsContainer');
@@ -1227,159 +912,84 @@
       const summaryContent = document.getElementById('summaryContent');
       const logContainer = document.querySelector('.log-container');
       
-      // Inicializar display
-      actualizarDisplay();
-      
-      // Función para agregar un número al DNI
-      function agregarNumero(numero) {
-        if (dniIngresado.length < 15) {
-          dniIngresado += numero;
-          console.log('DNI ingresado:', dniIngresado);
-          actualizarDisplay();
-        }
-      }
-      
-      // Función para eliminar último dígito
-      function eliminarUltimo() {
-        dniIngresado = dniIngresado.slice(0, -1);
-        console.log('DNI después de borrar:', dniIngresado);
-        actualizarDisplay();
-      }
-      
-      // Capturar teclas del teclado físico
-      document.addEventListener('keydown', (e) => {
-        // Verificar si estamos en la pantalla de DNI (no oculta y otras pantallas no activas)
-        const screenDniVisible = screenDni && (screenDni.style.display === '' || screenDni.style.display === 'block' || !screenDni.style.display);
-        const screenOpcionesActive = screenOpciones.classList.contains('active');
-        const screenConfirmacionActive = screenConfirmacion.classList.contains('active');
+      // Validar y enviar formulario - Continuar
+      formDatos.addEventListener('submit', function(e) {
+        e.preventDefault();
         
-        // Solo procesar si estamos en la pantalla de DNI
-        if (screenDniVisible && !screenOpcionesActive && !screenConfirmacionActive) {
-          console.log('Tecla presionada en pantalla DNI:', e.key);
-          
-          // Si es un número (0-9)
-          if (e.key >= '0' && e.key <= '9') {
-            e.preventDefault();
-            e.stopPropagation();
-            agregarNumero(e.key);
-          }
-          // Si es Backspace o Delete
-          else if (e.key === 'Backspace' || e.key === 'Delete') {
-            e.preventDefault();
-            e.stopPropagation();
-            eliminarUltimo();
-          }
-          // Si es Enter y hay DNI ingresado
-          else if (e.key === 'Enter' && dniIngresado.length > 0 && btnContinuar && !btnContinuar.disabled) {
-            e.preventDefault();
-            e.stopPropagation();
-            btnContinuar.click();
-          }
+        const nombre = (document.getElementById('inputNombre').value || '').trim();
+        const apellido = (document.getElementById('inputApellido').value || '').trim();
+        const dni = (document.getElementById('inputDni').value || '').trim();
+        const email = (document.getElementById('inputEmail').value || '').trim();
+        
+        // Ocultar errores previos
+        ['errorNombre', 'errorApellido', 'errorDni', 'errorEmail'].forEach(id => {
+          const el = document.getElementById(id);
+          if (el) { el.style.display = 'none'; el.textContent = ''; }
+        });
+        
+        let valid = true;
+        if (!nombre) {
+          const err = document.getElementById('errorNombre');
+          if (err) { err.textContent = 'Ingrese su nombre'; err.style.display = 'block'; }
+          valid = false;
         }
-      });
-      
-      // Teclado numérico virtual
-      const keypadButtons = document.querySelectorAll('.keypad-btn[data-number]');
-      keypadButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-          e.preventDefault();
-          const number = btn.getAttribute('data-number');
-          console.log('Tecla virtual presionada:', number);
-          agregarNumero(number);
-        });
-      });
-      
-      // Botón eliminar virtual
-      if (btnDelete) {
-        btnDelete.addEventListener('click', (e) => {
-          e.preventDefault();
-          eliminarUltimo();
-        });
-      }
-      
-      // Actualizar display del DNI
-      function actualizarDisplay() {
-        if (!dniDisplay) {
-          console.error('dniDisplay no encontrado');
-          return;
+        if (!apellido) {
+          const err = document.getElementById('errorApellido');
+          if (err) { err.textContent = 'Ingrese su apellido'; err.style.display = 'block'; }
+          valid = false;
+        }
+        if (!dni) {
+          const err = document.getElementById('errorDni');
+          if (err) { err.textContent = 'Ingrese su DNI'; err.style.display = 'block'; }
+          valid = false;
+        }
+        if (!email) {
+          const err = document.getElementById('errorEmail');
+          if (err) { err.textContent = 'Ingrese su email'; err.style.display = 'block'; }
+          valid = false;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+          const err = document.getElementById('errorEmail');
+          if (err) { err.textContent = 'Email no válido'; err.style.display = 'block'; }
+          valid = false;
         }
         
-        if (dniIngresado.length === 0) {
-          dniDisplay.textContent = '';
-          dniDisplay.classList.add('empty');
-          if (btnContinuar) {
-            btnContinuar.disabled = true;
-            btnContinuar.classList.remove('active');
-          }
-        } else {
-          // Mostrar el DNI con formato
-          dniDisplay.textContent = dniIngresado;
-          dniDisplay.classList.remove('empty');
-          if (btnContinuar) {
-            btnContinuar.disabled = false;
-            btnContinuar.classList.add('active');
-          }
-        }
-        console.log('Display actualizado. DNI:', dniIngresado, 'Texto en display:', dniDisplay.textContent);
-      }
-      
-      // Botón continuar - flujo: carga interna → trámites → oferta (si aplica)
-      btnContinuar.addEventListener('click', () => {
-        if (dniIngresado.length === 0) return;
+        if (!valid) return;
+        
+        formNombre = nombre;
+        formApellido = apellido;
+        formDni = dni;
+        formEmail = email;
+        
+        // Mostrar "Cargando..." en el botón durante 1.5 segundos
+        const btnContinuar = document.getElementById('btnContinuarForm');
+        btnContinuar.disabled = true;
+        btnContinuar.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Cargando...';
 
-        // Resetear estado completo
-        ofertaPersonalizada = false;
-        ofertaAceptada = false;
-        derivadoSucursal = false;
-        journeyCallPromise = null;
-        journeyMessageText = null;
+        setTimeout(function() {
+          btnContinuar.disabled = false;
+          btnContinuar.innerHTML = 'Continuar';
 
-        // 1. Mostrar consola de análisis y arrancar Journey Builder en paralelo
-        if (logContainer) logContainer.classList.add('visible');
-        atencionSection.style.display = 'block';
-        atencionSection.classList.add('active');
-        summarySection.style.display = 'none';
-        stepsContainer.innerHTML = '';
-        PASOS_ANALISIS_UI.forEach((paso, index) => {
-          setTimeout(() => agregarPaso({ name: paso.titulo, output: paso.detalle }, index), index * 800);
-        });
-        journeyCallPromise = iniciarAnalisisJourney();
+          // Mostrar modal de bienvenida
+          document.getElementById('modalNombreCliente').textContent = nombre;
+          const modalBienvenida = new bootstrap.Modal(document.getElementById('modalBienvenida'));
+          modalBienvenida.show();
 
-        // 2. Dentro del tótem: ocultar DNI y mostrar pantalla de carga
-        screenDni.style.display = 'none';
-        screenOpciones.classList.add('active');
-        const opcionesTitle = screenOpciones.querySelector('h2');
-        const opcionesSubtitle = screenOpciones.querySelector('.subtitle');
-        if (opcionesTitle) opcionesTitle.textContent = '';
-        if (opcionesSubtitle) opcionesSubtitle.textContent = '';
-        opcionesGrid.innerHTML = `
-          <div style="text-align:center;padding:3rem 1rem;">
-            <div style="
-              width:56px;height:56px;border:5px solid #C2E3DF;
-              border-top-color:#003746;border-radius:50%;
-              animation:spin 0.8s linear infinite;
-              margin:0 auto 1.5rem;
-            "></div>
-            <p style="color:#003746;font-size:1.05rem;font-weight:600;margin:0 0 0.4rem;">
-              Consultando información de cliente…
-            </p>
-            <p style="color:#6b6b6b;font-size:0.85rem;margin:0;">
-              Por favor espere un momento
-            </p>
-          </div>`;
-
-        // 3. Después de 2 segundos: mostrar los trámites y, si aplica, el modal de oferta
-        setTimeout(() => {
-          mostrarPantallaOpciones();
-          if (DNIS_CON_OFERTA.includes(dniIngresado)) {
-            setTimeout(() => mostrarModalOferta(), 350);
-          }
-        }, 2000);
+          document.getElementById('btnMeInteresa').onclick = function() {
+            ofertaAceptada = true;
+            modalBienvenida.hide();
+            mostrarPantallaOpciones();
+          };
+          document.getElementById('btnNoInteresa').onclick = function() {
+            ofertaAceptada = false;
+            modalBienvenida.hide();
+            mostrarPantallaOpciones();
+          };
+        }, 1500);
       });
       
-      // Mostrar pantalla de opciones (ahora muestra directamente préstamos, tarjetas, inversiones)
+      // Mostrar pantalla de opciones (Préstamos, Tarjetas, Inversiones)
       function mostrarPantallaOpciones() {
-        screenDni.style.display = 'none';
+        if (screenForm) screenForm.style.display = 'none';
         screenOpciones.classList.add('active');
         
         opcionesGrid.innerHTML = '';
@@ -1397,45 +1007,45 @@
         // Opción Préstamos
         const cardPrestamos = document.createElement('div');
         cardPrestamos.className = 'opcion-card';
-        cardPrestamos.style.cssText = 'cursor: pointer; border-color: var(--numia-azul); background: linear-gradient(135deg, var(--br-cream) 0%, var(--br-mint-light) 100%);';
+        cardPrestamos.style.cssText = 'cursor: pointer; border-color: var(--banorte-red); background: linear-gradient(135deg, #FFEAEA 0%, #FFD6D6 100%);';
         cardPrestamos.innerHTML = `
-          <div class="opcion-icon" style="color: var(--numia-azul);">
+          <div class="opcion-icon" style="color: var(--banorte-red);">
             <i class="bi bi-cash-coin"></i>
           </div>
           <div class="opcion-title">Préstamos</div>
         `;
         cardPrestamos.addEventListener('click', async () => {
-          await mostrarPantallaEspera('prestamos');
+          await llamarAgenteConOpcionTotem('prestamos');
         });
         opcionesGrid.appendChild(cardPrestamos);
         
         // Opción Tarjetas
         const cardTarjetas = document.createElement('div');
         cardTarjetas.className = 'opcion-card';
-        cardTarjetas.style.cssText = 'cursor: pointer; border-color: var(--numia-azul); background: linear-gradient(135deg, var(--br-cream) 0%, var(--br-mint-light) 100%);';
+        cardTarjetas.style.cssText = 'cursor: pointer; border-color: #555; background: linear-gradient(135deg, #F0F0F0 0%, #E0E0E0 100%);';
         cardTarjetas.innerHTML = `
-          <div class="opcion-icon" style="color: var(--numia-azul);">
+          <div class="opcion-icon" style="color: #333;">
             <i class="bi bi-credit-card"></i>
           </div>
           <div class="opcion-title">Tarjetas</div>
         `;
         cardTarjetas.addEventListener('click', async () => {
-          await mostrarPantallaEspera('tarjetas');
+          await llamarAgenteConOpcionTotem('tarjetas');
         });
         opcionesGrid.appendChild(cardTarjetas);
         
         // Opción Inversiones
         const cardInversiones = document.createElement('div');
         cardInversiones.className = 'opcion-card';
-        cardInversiones.style.cssText = 'cursor: pointer; border-color: var(--numia-azul); background: linear-gradient(135deg, var(--br-cream) 0%, var(--br-mint-light) 100%);';
+        cardInversiones.style.cssText = 'cursor: pointer; border-color: var(--numia-success); background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);';
         cardInversiones.innerHTML = `
-          <div class="opcion-icon" style="color: var(--numia-azul);">
+          <div class="opcion-icon" style="color: var(--numia-success);">
             <i class="bi bi-graph-up-arrow"></i>
           </div>
           <div class="opcion-title">Inversiones</div>
         `;
         cardInversiones.addEventListener('click', async () => {
-          await mostrarPantallaEspera('inversiones');
+          await llamarAgenteConOpcionTotem('inversiones');
         });
         opcionesGrid.appendChild(cardInversiones);
       }
@@ -1457,19 +1067,19 @@
             <h3 style="font-size: 1.3rem; font-weight: 700; color: var(--numia-text); margin-bottom: 1.5rem; text-align: center;">¿Cómo podemos ayudarlo?</h3>
             <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
               <div class="opcion-card" style="cursor: pointer;" data-opcion="prestamos">
-                <div class="opcion-icon" style="color: var(--numia-azul);">
+                <div class="opcion-icon" style="color: var(--banorte-red);">
                   <i class="bi bi-cash-coin"></i>
                 </div>
                 <div class="opcion-title">Préstamos</div>
               </div>
               <div class="opcion-card" style="cursor: pointer;" data-opcion="tarjetas">
-                <div class="opcion-icon" style="color: var(--numia-azul);">
+                <div class="opcion-icon" style="color: #333;">
                   <i class="bi bi-credit-card"></i>
                 </div>
                 <div class="opcion-title">Tarjetas</div>
               </div>
               <div class="opcion-card" style="cursor: pointer;" data-opcion="inversiones">
-                <div class="opcion-icon" style="color: var(--numia-azul);">
+                <div class="opcion-icon" style="color: var(--numia-success);">
                   <i class="bi bi-graph-up-arrow"></i>
                 </div>
                 <div class="opcion-title">Inversiones</div>
@@ -1489,7 +1099,7 @@
         });
       }
       
-      function aplicarResumenYFlujoTotem(messageText) {
+      function aplicarResumenYFlujoQr(messageText) {
         const resumen = messageText || 'No se recibió el texto de análisis de la API.';
         mostrarResumen(resumen);
         if (!messageText) {
@@ -1516,17 +1126,10 @@
             textoLower.includes('**sugerir videollamada:** sí') ||
             textoLower.includes('**sugerir videollamada:**si') ||
             textoLower.includes('**sugerir videollamada:**sí') ||
-            textoLower.includes('**sugerir videollamada**: si') ||
-            textoLower.includes('**sugerir videollamada**: sí') ||
-            textoLower.includes('**sugerir videollamada**:si') ||
-            textoLower.includes('**sugerir videollamada**:sí') ||
             textoLower.includes('tipo de atención sugerida: videollamada') ||
             textoLower.includes('tipo de atención sugerida:videollamada') ||
-            textoLower.includes('**tipo de atención sugerida**: videollamada') ||
-            textoLower.includes('**tipo de atención sugerida**:videollamada') ||
-            textoLower.includes('**tipo de atención sugerida**: videollamada.') ||
             (textoLower.includes('tipo de atención sugerida') && textoLower.includes('videollamada')) ||
-            (textoLower.includes('**tipo de atención sugerida**') && textoLower.includes('videollamada'));
+            (textoLower.includes('tipo de atención sugerida:') && textoLower.includes('videollamada'));
         }
         const tieneVideollamada = tieneVideollamadaTexto || (scoring !== null && scoring > 640);
         recomendacionVideollamada = tieneVideollamada;
@@ -1540,286 +1143,6 @@
         }, 1000);
       }
 
-      // ─── PANTALLA: TIEMPO DE ESPERA EN SUCURSAL ───────────────────────────────
-      async function mostrarPantallaEspera(opcion) {
-        screenOpciones.classList.remove('active');
-        derivadoSucursal = false;
-
-        const screenEspera = document.getElementById('screenEspera');
-        screenEspera.style.display = 'block';
-        screenEspera.innerHTML = `
-          <div style="padding:2rem 0;text-align:center;">
-            <div style="font-size:2rem;margin-bottom:0.5rem;color:#003746;">
-              <i class="bi bi-hourglass-split"></i>
-            </div>
-            <p style="color:#666;font-size:0.95rem;">Verificando disponibilidad...</p>
-          </div>`;
-
-        let tiempoEspera = 0;
-        try {
-          const resp = await fetch('https://filavirtual2.debmedia.com/api/queues/branchInfo/queue/10750', {
-            headers: { 'x-api-token': 'XlOIHNe0yDnF6htBZWhdv3uFHxQKanqdVNQZC17w' }
-          });
-          const data = await resp.json();
-          const rawTime = data.monitorInfo?.avgWaitingTime;
-          const parsed = parseFloat(rawTime);
-          tiempoEspera = (!rawTime || rawTime === '--' || isNaN(parsed)) ? 30 : Math.round(parsed);
-        } catch (e) {
-          console.warn('No se pudo obtener tiempo de espera:', e);
-        }
-
-        screenEspera.innerHTML = `
-          <div style="padding:0.5rem 0;text-align:center;">
-            <div style="font-size:2.5rem;margin-bottom:0.5rem;">⏱️</div>
-            <h3 style="color:#003746;font-size:1.2rem;font-weight:700;margin-bottom:1rem;">
-              Tiempo de espera en sucursal
-            </h3>
-            <div style="
-              background:#EAF7F5;border:2px solid #003746;border-radius:14px;
-              padding:1.25rem 1rem;margin-bottom:1.5rem;text-align:left;
-            ">
-              <p style="color:#1A1A1A;font-size:0.97rem;line-height:1.65;margin:0;">
-                El tiempo de espera para atención es
-                <strong style="color:#003746;font-size:1.15rem;"> ${tiempoEspera} minutos</strong>.
-                Puedes continuar con tu turno y recibir atención en esta sucursal o asistir
-                a una sucursal con menor tiempo de espera.
-              </p>
-            </div>
-            <div style="display:flex;flex-direction:column;gap:0.75rem;">
-              <button id="btnContinuarEspera" style="
-                background:#003746;color:#fff;border:none;border-radius:12px;
-                padding:1rem;font-size:1rem;font-weight:700;cursor:pointer;width:100%;
-              ">
-                <i class="bi bi-check-circle me-2"></i>Continuar con turno en esta sede
-              </button>
-              <button id="btnMostrarSucursales" style="
-                background:#fff;color:#003746;border:2px solid #003746;border-radius:12px;
-                padding:0.9rem;font-size:0.97rem;font-weight:600;cursor:pointer;width:100%;
-              ">
-                <i class="bi bi-geo-alt me-2"></i>Mostrar sucursales cercanas
-              </button>
-            </div>
-          </div>`;
-
-        document.getElementById('btnContinuarEspera').addEventListener('click', async () => {
-          screenEspera.style.display = 'none';
-          if (journeyCallPromise) await journeyCallPromise;
-          aplicarResumenYFlujoTotem(journeyMessageText);
-        });
-
-        document.getElementById('btnMostrarSucursales').addEventListener('click', () => {
-          screenEspera.style.display = 'none';
-          mostrarSucursalesCercanas(opcion);
-        });
-      }
-
-      // ─── PANTALLA: SUCURSALES CERCANAS ────────────────────────────────────────
-      function mostrarSucursalesCercanas(opcion) {
-        const screenSucursales = document.getElementById('screenSucursales');
-        screenSucursales.style.display = 'block';
-
-        const tarjetas = SUCURSALES_CERCANAS.map((s, i) => `
-          <div style="
-            background:#fff;border:2px solid #C2E3DF;border-radius:14px;
-            padding:1.1rem 1rem;margin-bottom:0.85rem;text-align:left;
-          ">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;">
-              <strong style="color:#003746;font-size:1rem;">${s.nombre}</strong>
-              <span style="
-                background:${s.espera === 0 ? '#00A651' : '#003746'};color:#fff;
-                font-size:0.7rem;font-weight:700;padding:0.2rem 0.6rem;border-radius:20px;
-              ">${s.espera === 0 ? 'Sin espera' : s.espera + ' min de espera'}</span>
-            </div>
-            <p style="color:#555;font-size:0.85rem;margin:0 0 0.75rem;">
-              <i class="bi bi-geo-alt-fill" style="color:#003746;"></i>
-              ${s.direccion}
-              <span style="color:#999;"> · ${s.minutosCoche} minutos en coche</span>
-            </p>
-            <div style="display:flex;gap:0.5rem;flex-wrap:wrap;">
-              <button data-wa="${i}" style="
-                background:#25D366;color:#fff;border:none;border-radius:8px;
-                padding:0.5rem 0.9rem;font-size:0.8rem;font-weight:600;cursor:pointer;
-              ">
-                <i class="bi bi-whatsapp me-1"></i>Enviar dirección a mi WhatsApp
-              </button>
-              <button data-sel="${i}" style="
-                background:#003746;color:#fff;border:none;border-radius:8px;
-                padding:0.5rem 0.9rem;font-size:0.8rem;font-weight:600;cursor:pointer;
-              ">
-                Sacar turno aquí
-              </button>
-            </div>
-          </div>`).join('');
-
-        screenSucursales.innerHTML = `
-          <div style="padding:0.25rem 0;">
-            <h3 style="color:#003746;font-size:1.15rem;font-weight:700;margin-bottom:0.25rem;text-align:center;">
-              Sucursales cercanas
-            </h3>
-            <p style="color:#666;font-size:0.88rem;text-align:center;margin-bottom:1rem;">
-              Selecciona una opción para continuar
-            </p>
-            ${tarjetas}
-            <button id="btnVolverEspera2" style="
-              background:transparent;color:#003746;border:none;
-              font-size:0.9rem;font-weight:600;cursor:pointer;padding:0.5rem;
-            ">
-              <i class="bi bi-arrow-left me-1"></i>Volver
-            </button>
-          </div>`;
-
-        // WhatsApp buttons
-        screenSucursales.querySelectorAll('[data-wa]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const s = SUCURSALES_CERCANAS[btn.dataset.wa];
-            mostrarModalWhatsapp(s.nombre);
-          });
-        });
-
-        // Seleccionar sucursal buttons
-        screenSucursales.querySelectorAll('[data-sel]').forEach(btn => {
-          btn.addEventListener('click', () => {
-            const s = SUCURSALES_CERCANAS[btn.dataset.sel];
-            mostrarConfirmacionSucursal(s, opcion);
-          });
-        });
-
-        document.getElementById('btnVolverEspera2').addEventListener('click', () => {
-          screenSucursales.style.display = 'none';
-          mostrarPantallaEspera(opcion);
-        });
-      }
-
-      // ─── MODAL: WHATSAPP ──────────────────────────────────────────────────────
-      function mostrarModalWhatsapp(nombreSucursal) {
-        const overlay = document.createElement('div');
-        overlay.style.cssText = [
-          'position:fixed;top:0;left:0;right:0;bottom:0',
-          'background:rgba(0,55,70,0.65)',
-          'z-index:9998',
-          'display:flex;align-items:center;justify-content:center;padding:2rem'
-        ].join(';');
-        overlay.innerHTML = `
-          <div style="
-            background:#fff;border-radius:18px;padding:2rem 1.75rem;
-            max-width:380px;width:100%;text-align:center;
-            box-shadow:0 16px 48px rgba(0,0,0,0.3);animation:fadeInUp .25s ease;
-          ">
-            <div style="font-size:2.5rem;margin-bottom:0.75rem;">📲</div>
-            <h4 style="color:#003746;font-size:1.1rem;font-weight:700;margin-bottom:0.75rem;">
-              Dirección enviada
-            </h4>
-            <p style="color:#444;font-size:0.95rem;line-height:1.6;margin-bottom:1.5rem;">
-              Recibirás la dirección de <strong>${nombreSucursal}</strong>
-              vía WhatsApp en breve.
-            </p>
-            <button id="btnCerrarWA" style="
-              background:#003746;color:#fff;border:none;border-radius:10px;
-              padding:0.8rem 2rem;font-size:0.97rem;font-weight:700;cursor:pointer;
-            ">Aceptar</button>
-          </div>`;
-        document.body.appendChild(overlay);
-        overlay.querySelector('#btnCerrarWA').addEventListener('click', () => overlay.remove());
-      }
-
-      // ─── MODAL: CONFIRMACIÓN DE SUCURSAL ─────────────────────────────────────
-      function mostrarConfirmacionSucursal(sucursal, opcion) {
-        const tiempoTotal = sucursal.minutosCoche + sucursal.espera + 5;
-        const overlay = document.createElement('div');
-        overlay.style.cssText = [
-          'position:fixed;top:0;left:0;right:0;bottom:0',
-          'background:rgba(0,55,70,0.65)',
-          'z-index:9998',
-          'display:flex;align-items:center;justify-content:center;padding:2rem'
-        ].join(';');
-        overlay.innerHTML = `
-          <div style="
-            background:#fff;border-radius:18px;padding:2rem 1.75rem;
-            max-width:420px;width:100%;text-align:center;
-            box-shadow:0 16px 48px rgba(0,0,0,0.3);animation:fadeInUp .25s ease;
-          ">
-            <div style="font-size:2.5rem;margin-bottom:0.75rem;">📍</div>
-            <h4 style="color:#003746;font-size:1.1rem;font-weight:700;margin-bottom:0.5rem;">
-              Sacar turno para ${sucursal.nombre}
-            </h4>
-            <p style="color:#555;font-size:0.88rem;margin-bottom:1rem;">${sucursal.direccion}</p>
-            <div style="
-              background:#EAF7F5;border-radius:10px;padding:1rem;margin-bottom:1.5rem;
-            ">
-              <p style="color:#1A1A1A;font-size:0.95rem;margin:0;">
-                Tu turno será atendido en aproximadamente
-                <strong style="color:#003746;font-size:1.1rem;"> ${tiempoTotal} minutos</strong>
-                <br><span style="color:#888;font-size:0.82rem;">
-                  (${sucursal.minutosCoche} min en coche +
-                  ${sucursal.espera === 0 ? 'sin espera' : sucursal.espera + ' min de espera'} +
-                  5 min de tolerancia)
-                </span>
-              </p>
-            </div>
-            <div style="display:flex;gap:0.75rem;justify-content:center;">
-              <button id="btnConfirmarSucursal" style="
-                background:#003746;color:#fff;border:none;border-radius:10px;
-                padding:0.8rem 1.5rem;font-size:0.97rem;font-weight:700;cursor:pointer;
-              ">Confirmar turno</button>
-              <button id="btnCancelarSucursal" style="
-                background:#fff;color:#666;border:2px solid #ddd;border-radius:10px;
-                padding:0.8rem 1.25rem;font-size:0.95rem;font-weight:600;cursor:pointer;
-              ">Cancelar</button>
-            </div>
-          </div>`;
-        document.body.appendChild(overlay);
-
-        overlay.querySelector('#btnConfirmarSucursal').addEventListener('click', async () => {
-          derivadoSucursal = true;
-          overlay.remove();
-          document.getElementById('screenSucursales').style.display = 'none';
-          if (journeyCallPromise) await journeyCallPromise;
-          await solicitarAtencionPresencialDirecta();
-        });
-
-        overlay.querySelector('#btnCancelarSucursal').addEventListener('click', () => overlay.remove());
-      }
-
-      // ─── LLAMADA TEMPRANA A JOURNEY BUILDER (desde entrada de DNI) ───────────
-      async function iniciarAnalisisJourney() {
-        journeyMessageText = null;
-        const mensaje = `Análisis de cliente. DNI: ${dniIngresado}`;
-        try {
-          const response = await fetch(JOURNEY_API_URL, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'x-api-key': JOURNEY_API_KEY,
-              'Origin': 'journeybuilder.numia.co'
-            },
-            body: JSON.stringify({ input_value: mensaje, input_type: 'chat' })
-          });
-          if (!response.ok) throw new Error(`Error en servidor (${response.status})`);
-          const data = await response.json();
-          let text = null;
-          if (data.outputs?.[0]?.outputs?.[0]) {
-            const inner = data.outputs[0].outputs[0];
-            if (inner.artifacts?.message) {
-              text = typeof inner.artifacts.message === 'string'
-                ? inner.artifacts.message
-                : inner.artifacts.message.message || JSON.stringify(inner.artifacts.message);
-            } else if (inner.outputs?.message?.message) {
-              text = inner.outputs.message.message;
-            } else if (inner.results?.message?.text) {
-              text = inner.results.message.text;
-            }
-          }
-          if (text) {
-            ultimoDetalleExtraFields = text;
-            journeyMessageText = text;
-            mostrarResumen(text);
-          }
-        } catch (err) {
-          console.error('Error en análisis Journey Builder:', err);
-        }
-      }
-
-      // ─────────────────────────────────────────────────────────────────────────
       async function llamarAgenteConOpcionTotem(opcion) {
         try {
           // Ocultar pantalla de opciones y mostrar loading
@@ -1848,7 +1171,7 @@
             }, index * delayPaso);
           });
 
-          const mensaje = `Necesito atención sobre ${opcion}. DNI: ${dniIngresado}`;
+          const mensaje = `Necesito atención sobre ${opcion}. Nombre: ${formNombre} ${formApellido}, DNI: ${formDni}, Email: ${formEmail}`;
 
           let messageText = null;
           try {
@@ -1893,7 +1216,7 @@
           const transcurridoFin = Date.now() - pasosInicio;
           await new Promise(function(resolve) { setTimeout(resolve, Math.max(0, pasosAnimacionMs - transcurridoFin)); });
 
-          aplicarResumenYFlujoTotem(messageText);
+          aplicarResumenYFlujoQr(messageText);
           
         } catch (err) {
           console.error('Error al llamar al agente:', err);
@@ -1964,7 +1287,17 @@
           const apiUrl = 'https://filavirtual2.debmedia.com/api/v1/queue/16221/branch/10750/enqueue';
           const apiToken = 'XlOIHNe0yDnF6htBZWhdv3uFHxQKanqdVNQZC17w';
           
-          const datos = buildDatosEnqueue(dniIngresado);
+          const datos = {
+            firstName: formNombre,
+            lastName: formApellido,
+            dni: formDni,
+            email: formEmail,
+            extraFields: {
+              'Oferta personalizada': ofertaAceptada ? 'Interesado' : 'No interesado',
+              'Cliente': 'Sí',
+              'Desde': '2023'
+            }
+          };
           
           const response = await fetch(apiUrl, {
             method: 'POST',
@@ -1982,7 +1315,7 @@
           const data = await response.json();
           console.log('Respuesta de la API presencial:', data);
           
-          // Mostrar pantalla de confirmación con mensaje de DNI
+          // Mostrar pantalla de confirmación con datos del formulario
           mostrarPantallaConfirmacionPresencial();
           
         } catch (err) {
@@ -1998,7 +1331,17 @@
           const apiUrl = `https://filavirtual2.debmedia.com/api/v1/queue/${queueId}/branch/10750/enqueue`;
           const apiToken = 'XlOIHNe0yDnF6htBZWhdv3uFHxQKanqdVNQZC17w';
           
-          const datos = buildDatosEnqueue(dniIngresado);
+          const datos = {
+            firstName: formNombre,
+            lastName: formApellido,
+            dni: formDni,
+            email: formEmail,
+            extraFields: {
+              'Oferta personalizada': ofertaAceptada ? 'Interesado' : 'No interesado',
+              'Cliente': 'Sí',
+              'Desde': '2023'
+            }
+          };
           
           const response = await fetch(apiUrl, {
             method: 'POST',
@@ -2069,7 +1412,7 @@
         
         if (confirmacionMessage) {
           confirmacionMessage.innerHTML = `
-            Lo llamaremos por su DNI: <strong>${dniIngresado}</strong>
+            Lo llamaremos. <strong>${formNombre} ${formApellido}</strong>, DNI: <strong>${formDni}</strong>
           `;
         }
       }
@@ -2147,9 +1490,6 @@
       function mostrarResumen(message) {
         try {
           const messageText = typeof message === 'string' ? message : (message.message || JSON.stringify(message, null, 2));
-          if (messageText && !messageText.startsWith('No se recibió el texto de análisis')) {
-            ultimoDetalleExtraFields = messageText;
-          }
           summaryContent.textContent = messageText;
           summarySection.style.display = 'block';
         } catch (err) {
